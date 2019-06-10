@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  samba:
+    image: samba
+    restart: unless-stopped
+    tty: true
+    volumes:
+      # here map shares
+      - "/mnt/hdd_repo/share1/:/share1"
+      - "samba_cfg:/var/lib/samba"
+    ports:
+    # keep port 139 (NetBIOS) closed unless needed
+#      - "139:139"
+      - "445:445"
+    build:
+      context: .
+      dockerfile: Dockerfile
+# e.g. stores samba user's password
+volumes:
+  samba_cfg:
